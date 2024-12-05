@@ -13,11 +13,6 @@ CREATE TABLE `classroom` (
   `capacity` decimal(4,0) DEFAULT NULL,
   PRIMARY KEY (`building`,`room_number`)
 ) ;
-CREATE TABLE `concept` (
-  `ID` varchar(20) NOT NULL,
-  `type` varchar(20) NOT NULL,
-  PRIMARY KEY (`ID`,`type`)
-) ;
 CREATE TABLE `course` (
   `course_id` varchar(8) NOT NULL,
   `title` varchar(50) DEFAULT NULL,
@@ -32,17 +27,6 @@ CREATE TABLE `department` (
   `building` varchar(15) DEFAULT NULL,
   `budget` decimal(12,2) DEFAULT NULL,
   PRIMARY KEY (`dept_name`)
-) ;
-CREATE TABLE `event_log` (
-  `event_id` int NOT NULL AUTO_INCREMENT,
-  `activity` varchar(20) NOT NULL,
-  `timestamp` datetime NOT NULL DEFAULT '2010-10-01 00:30:00',
-  `student_id` varchar(20) DEFAULT NULL,
-  `instructor_id` varchar(20) DEFAULT NULL,
-  `section_id` varchar(20) DEFAULT NULL,
-  `course_id` varchar(20) DEFAULT NULL,
-  `department_id` varchar(20) DEFAULT NULL,
-  PRIMARY KEY (`event_id`)
 ) ;
 CREATE TABLE `instructor` (
   `ID` varchar(5) NOT NULL,
@@ -72,7 +56,8 @@ CREATE TABLE `section` (
   PRIMARY KEY (`course_id`,`sec_id`,`semester`,`year`),
   KEY `building` (`building`,`room_number`),
   CONSTRAINT `section_ibfk_1` FOREIGN KEY (`course_id`) REFERENCES `course` (`course_id`) ON DELETE CASCADE,
-  CONSTRAINT `section_ibfk_2` FOREIGN KEY (`building`, `room_number`) REFERENCES `classroom` (`building`, `room_number`) ON DELETE SET NULL
+  CONSTRAINT `section_ibfk_2` FOREIGN KEY (`building`, `room_number`) REFERENCES `classroom` (`building`, `room_number`) ON DELETE SET NULL,
+  CONSTRAINT `time_slot_ibfk_2` FOREIGN KEY (`time_slot_id`) REFERENCES `time_slot` (`time_slot_id`) ON DELETE SET NULL
 ) ;
 CREATE TABLE `student` (
   `ID` varchar(5) NOT NULL,
