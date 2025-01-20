@@ -1,0 +1,2 @@
+ignore = E302,E305,E501
+max-line-length = 120
