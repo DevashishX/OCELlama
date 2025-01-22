@@ -2,7 +2,7 @@ import clustering_utils, analyser
 
 
 def main():
-    DDL_file = "./test_parser.sql"
+    DDL_file = "test_parser.sql"
     with open(DDL_file) as fp:
         ddl = fp.read()
     results = clustering_utils.parse_ddl(ddl)

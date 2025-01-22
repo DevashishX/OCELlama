@@ -53,7 +53,7 @@ def parse_ddl(ddl: str):
             if column_match:
                 column_name = column_match.group(1)  # Include backticks in column name
                 column_definition = column_match.group(2).strip()
-                columns.append({"name": column_name, "definition": column_definition})
+                columns.append({"name": column_name, "definition": column_definition, "parent": table_name})
 
         # Extract primary key
         primary_key_match = re.search(r"PRIMARY KEY \(([`\w`, ]+)\)", statement)
@@ -80,6 +80,16 @@ def parse_ddl(ddl: str):
                     "on_delete": on_delete,
                 }
             )
+
+        # Assign Parent to a column depending on Primary key or foreign key status
+        for column in columns:
+            if column["name"] in primary_keys:
+                column["parent"] = table_name
+            else:
+                for fk in foreign_keys:
+                    if column["name"] in fk["columns"]:
+                        column["parent"] = fk["referenced_table"]
+                        break
 
         # Store table information
         tables_info.append(
