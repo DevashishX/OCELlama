@@ -2,7 +2,7 @@ import networkx as nx
 
 from clustering import clustering_utils
 
-ddl_file = "clustering\\university2_structure.sql"
+ddl_file = "clustering\\database_changelog_section.sql"
 
 
 def get_graph():

@@ -2,6 +2,11 @@ import networkx as nx
 import re
 
 def process_dag(digraph: nx.DiGraph):
+    """
+    Returns the Edge queue in the order of merging
+    :param digraph:
+    :return:
+    """
     graph = digraph.copy()
     edge_queue = []
     while graph.nodes:
@@ -17,10 +22,15 @@ def process_dag(digraph: nx.DiGraph):
     return edge_queue
 
 def rename_duplicated_nodes(queue):
+    """
+    Rename duplicated nodes in the edge queue
+    :param queue:
+    :return:
+    """
     mapping = {}
     for edge in queue:
         for node in edge:
-            match = re.match(r"^(.*)_dup_\d+$", str(node))
+            match = re.match(r"^(.*)_dup_\d+$", str(node)) # just get the real name of the table
             if match:
                 original_node = match.group(1)
                 mapping[node] = original_node
